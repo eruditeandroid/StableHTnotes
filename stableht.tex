@@ -1,0 +1,408 @@
+\documentclass{article}
+
+\usepackage{notes}
+
+\title{Stable Homotopy Theory}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\pagebreak
+
+\section{1/30 (Joe Hlavinka) -- Organizational Meeting and Introduction}
+
+\subsection{Logistics}
+
+The seminar page can be found on \href{https://math.berkeley.edu/~kskapoor/seminars/spring2025/stableht}{Kabir Kapoor's website}.
+
+Here are some topics we'd like to cover:
+
+\begin{enumerate}
+	\item Basics of stable homotopy theory (the Hurewicz theorem for spectra, Freudenthal suspension)
+	\item The Pontryagin-Thom theorem (possibly following Milnor's treatment in \emph{Topology from the Differentiable Viewpoint})
+	\item Segal's interpretation of spectra using configuration spaces and electromagnetism
+	\item Infinite loop spaces and the equivalence between connective spectra and grouplike $\EE_\infty$-spaces
+	\item Thomason's equivalence between $(-1)$-connective spectra and (a localization of) symmetric monoidal categories
+	\item Complex bordism $\MU$, formal group laws, and Quillen's geometric interpretation
+	\item Brown-Peterson spectra and ``designer'' Thom-ish spectra
+	\item Chromatic homotopy theory (Morava $K$-theories, etc)
+	\item The Landweber exact functor theorem
+	\item The Adams spectral sequence as descent along $\Spec \ZZ \to \Spec \SS$
+	\item Stable cohomology operations (Steenrod squares, etc)
+	\item Floer homotopy theory
+	\item Symplectic / spectral Khovanov homology
+	\item Rational homotopy theory
+	\item Integral Kirwan surjectivity
+	\item Algebraic $K$-theory (after Nikolaus-Scholze?)
+	\item Geometric representation theory with coefficients in spectra
+	\item Spectral algebraic theory
+\end{enumerate}
+
+The goal is to be leisurely and friendly.
+
+\subsection{Introduction -- Higher Algebra}
+
+We like cohomology theories (as axiomatized e.g.\ by Eilenberg and Steenrod).
+In particular, we enjoy thinking about stable cohomology operations, multiplicative structures, and many other things we can do on cohomology.
+If we try to think of cohomology theories as some sort of functors from the category $\Sc$ of spaces to abelian groups, we end up with a bad ``category of cohomology theories'' -- the result isn't triangulated.
+Instead, it's better to work with the category $\Sp$ of \emph{spectra}.
+
+\begin{thm}
+	The category $\Sp$ is the ``triangularization'' of the category of cohomology theories.
+	In particular, the objects of $\Sp$ are cohomology theories, but there are more maps of spectra, called \emph{phantom maps},\footnote{In particular, there is a phantom map $\Hrm\QQ \to \KU$.
+	There are no phantom maps between ``Landweber exact'' spectra (in particular, those that appear in chromatic homotopy theory).} which disappear on taking homotopy classes.
+\end{thm}
+
+Given a cohomology theory $F$, the \emph{Brown representability theorem} allows us to find a spectrum $F_X$ such that, for any space $Y$, we have
+\[
+	F(Y) \simeq \Hom(\Sigma^\infty Y, F_X).
+\]
+
+Another viewpoint on spectra is that $\Sp = \Sc_*[\Sigma\inv]$, i.e.\ spectra are what we get when we invert the suspension functor of pointed spaces.
+This is closely related to the Spanier-Whitehead construction of spectra.
+In general, this relationship is much less subtle than the relationship between spectra and cohomology theories.
+Thinking of spectra as cohomology theories (with the above caveats), the above claim comes from the suspension axiom for cohomology theories: for a spectrum $X$ and a space $Y$, we have
+\[
+	\Hom_\Sp(\Sigma^\infty Y, X) \simeq X^*(Y),
+\]
+
+\subsection{Stable homotopy}
+
+For a pointed space $Y$, there are natural maps $\pi_n(Y) \to \pi_{n+1}(\Sigma Y)$ (ultimately coming from the adjunction between suspension and loop spaces).\footnote{There are some subtleties -- any subcategory of the classical category of topological spaces with such an adjunction has very few colimits.
+This can be avoided with enough model- or $\infty$-categorical dexterity.}
+
+\begin{thm}[Freudenthal suspension]
+	For $i \gg 0$, the maps $\pi_{n+i}(\Sigma^i Y) \to \pi_{n+i+1}(\Sigma^{i+1} Y)$ are equivalences.
+\end{thm}
+
+Thus the sequence of maps eventually stabilizes, and we may define:
+
+\begin{dfn}
+	For $n \in \ZZ$, let the $n$th \emph{stable homotopy group} of $Y$ be $\pi_n^s(Y) = \colim_i \pi_{n+i}(\Sigma^i Y)$.
+	From the equivalence $\pi_n^s(Y) \simeq \pi_{n+1}^s(\Sigma Y)$, we see that $\pi_*^s(-)$ is a homology theory.
+\end{dfn}
+
+For a general spectrum $X$, we can write $X_*(Y) \simeq \pi_*^s(X \wedge \Sigma^\infty Y)$.
+This gives a notion of \emph{homology theory} associated to any spectrum
+
+The functor $\pi_*^s$ is corepresented by a spectrum $\SS$, called the \emph{sphere spectrum}.
+That is,
+\[
+	\pi_*^s(Y) = \Hom_*(\SS, \Sigma^\infty Y),
+\]
+and $\pi_n^s(Y)$ consists of homotopy classes of maps $\SS[n] \to \Sigma^\infty Y$.
+We can write $\SS = \Sigma^\infty S^0$.
+
+\subsection{Stable $\infty$-categories}
+
+We should think of the category of spectra as a \emph{stable $\infty$-category}.
+In a 1-category, we would have a pushout diagram
+\[
+	\begin{tikzcd}
+		X \rar \dar & \pt \dar \\
+		\pt \rar & \pt.
+	\end{tikzcd}
+\]
+
+Things are different in $\infty$-categories: we are allowed to replace objects by equivalent objects.
+Thus, replacing $\pt$ by the (contractible) cone $CX$, we obtain a pushout diagram
+\[
+	\begin{tikzcd}
+		X \rar \dar & \pt \dar \\
+		\pt \rar & \Sigma X.
+	\end{tikzcd}
+\]
+Similarly, using the path space fibration, we get a pullback diagrams
+\[
+	\begin{tikzcd}
+		\Omega X \rar \dar & \pt \dar \\
+		\pt \rar & X.
+	\end{tikzcd}
+\]
+In $\Sp$, we have $\Omega = \Sigma\inv$.
+Stability is a generalization of this: we want pushout squares to agree with pullback squares.
+
+\section{2/6 (Ward Veltman) -- The Pontryagin-Thom Construction}
+
+\subsection{Motivation: Steenrod realization}
+
+The \emph{Steenrod realization problem} asks: if $X$ is a topological space and $\alpha \in H_n(X; \FF_2)$, is there a compact $n$-manifold $M$ and $f: M \to X$ such that $f_* [M] = \alpha$?
+The answer turns out to be yes if we work with $\FF_2$ coefficients but no if we work with $\ZZ$ coefficients.
+
+Note that, if $M = \partial W$ and $f: M \to X$ extends to $F: W \to X$, then
+\[
+	f_* [M] = f_* \partial [W] = 0
+\]
+because $f_*$ factors through $H_{n+1}(W, M) \to H_{n+1}(X, X) = 0$.
+Thus cobordism should be relevant to this story somehow -- we should try to understand it more.
+
+\subsection{Cobordism and statement of Thom's theorem}
+
+\begin{dfn}
+	Let $M$ and $N$ be smooth closed $n$-manifolds.
+	We say that $M$ and $N$ are \emph{cobordant} if there exists a compact $(n+1)$-manifold $W$ such that $M \sqcup N = \partial W$.
+	This forms an equivalence relation, and we denote the set of equivalence classes by $\Nc_n$.
+	Then $\Nc = \oplus_{n \in \NN} \Nc_n$ forms a ring (where addition is $\sqcup$ and multiplication is $\times$).
+\end{dfn}
+
+We can also consider cobordism with different stable structures on the tangent bundles: these give rings $\Nc_n^G$, where $G$ is the relevant structure group.
+
+\begin{thm}[Thom, 1954]
+	There is a ring isomorphism 
+	\[
+		\Nc_* \xrightarrow{\sim} \pi_*(\MO) \cong \FF_2[x_k : k \neq 2^\ell - 1].
+	\]
+\end{thm}
+
+Our goal for today will be to construct this map.
+We should first explain what $\pi_*(\MO)$ is.
+
+Let $\BO(k) = \Gr_k(\RR^\infty)$ be the classifying space of $\Orm(k)$.
+Write $\EO(k) = V_k(\RR^\infty)$ for the universal principal $\Orm(k)$-bundle and $\gamma_k^\infty = \EO(k) \times^{\Orm(k)} \RR^k$ for the universal vector bundle (both defined over $\BO(k)$).
+Let
+\[
+	\MO(k) = \Th(\gamma_k^\infty) := D(\gamma_k^\infty) / S(\gamma_k^\infty),
+\]
+where $D(-)$ is the disk bundle, $S(-)$ is the sphere bundle, and $\Th(-)$ is the \emph{Thom space}.
+The inclusions $i: \BO(k) \hookrightarrow \BO(k+1)$ (induced by $\Gr_k(\RR^{n+k}) \hookrightarrow \Gr_{k+1}(\RR^{n+k+1})$) fit into commutative squares
+\[
+	\begin{tikzcd}
+		\gamma_k^\infty \oplus \RR \rar \dar & \gamma_{k+1}^\infty \dar \\
+		\BO(k) \rar & \BO(k+1).
+	\end{tikzcd}
+\]
+On Thom spaces, we have
+\[
+	\Th(\gamma_k^\infty \oplus \RR) \simeq \Th(\gamma_k^\infty) \wedge S^1 \simeq \Sigma \MO(k).
+\]
+Thus we have natural maps $\sigma_k: \Sigma \MO(k) \to \MO(k+1)$, and the spaces $\MO(k)$ assemble into a spectrum (or ``prespectrum'' according to one's choice of model).
+
+\begin{dfn}
+	The \emph{$n$th stable homotopy group of $\MO$} is defined to be
+	\[
+		\pi_n(\MO) = \colim_k \pi_{n+k}(\MO(k)).
+	\]
+\end{dfn}
+
+\subsection{Construction of the map}
+
+We want to define a map $\Nc_n \to \pi_n(\MO)$.
+Let $M^n$ represent a class in $\Nc_n$.
+Choose an embedding $i: M \hookrightarrow \RR^{n+k}$ (for some $k$) such that $i$ extends to an embedding of a tubular neighborhood $N$ around $i(M)$.
+We may assume that $N = D_\epsilon(\nu_M)$ is a disk bundle (of some radius $\epsilon > 0$).
+Note that $\ol{N} / \partial \ol{N} \cong \Th(\nu_M)$.
+
+The \emph{Pontryagin-Thom collapse map} $\theta: S^{n+k} \to \Th(\nu_M)$ is defined as follows.
+View $S^{n+k} \cong \RR{n+k} \cup \{\infty\}$.
+Then $\theta$ maps $N$ identically into $\ol{N} / \partial \ol{N}$ and maps $S^{n+k} \setminus N$ to $\partial \ol{N} / \partial \ol{N} = \pt$.
+This map is continuous.
+
+Consider the \emph{Gauss map} $M \to \Gr_k(\RR^{n+k})$ given by $x \mapsto (T_x M)^\perp$.
+The composite $M \to \Gr_k(\RR^{n+k}) \to \BO(k)$ is (by construction) the classifying map for the normal bundle $\nu_M$.
+Considering the map $\nu_M \to \gamma_k^\infty$ and passing to Thom spaces, we obtain a map $\eta: \Th(\nu_M) \to \MO(k)$
+
+Composing these maps gives $\eta \circ \theta: S^{n+k} \in \MO(k)$, hence a class $[\eta \circ \theta] \in \pi_n(\MO)$.
+Note that this depends on various choices:
+\begin{itemize}
+	\item A representative $M^n$
+	\item An embedding $i: M \to \RR^{n+k}$
+	\item A tubular neighborhood $N$ of $i(M)$
+\end{itemize}
+We'll need to show that this is independent of all of the choices.
+
+To see independence of $M$, it suffices to show that if $M = \partial W^{n+1}$, then the corresponding class in $\pi_n(\MO)$ is zero.
+For this, embed $S^{n+k} \hookrightarrow \RR^{n+k+1}$ as the unit sphere, and extend $i$ to a map $i': N' \to \ol{D}_1(\RR^{k+1})$ for some tubular neighborhood $N'$ of $W$.
+(We can do this if $k$ is large enough because $M$ and $W$ are compact.)
+We end up with a commutative diagram 
+\[
+	\begin{tikzcd}
+		S^{n+k} \ar[rr] \dar["\theta_M"] & & \ol{D}_1(\RR^{n+k+1}) \dar["\theta_W"] \\
+		\Th(\nu_M) \ar[rr] \ar[dr, "\eta_M"] & & \Th(\nu_W) \ar[dl, "\eta_W"] \\
+		 & \MO(k) &
+	\end{tikzcd}
+\]
+Since $\eta_M \circ \theta_M$ factors through $\ol{D}_1(\RR^{n+k+1}) \simeq \pt$, we have $[\eta_M \circ \theta_M] = 0$.
+
+We'll skip showing the independence of the other choices.
+
+\subsection{The map is a group homomorphism}
+
+We'd like to show that the map $\Phi: \Nc_n \to \pi_n(\MO)$ is a group homomorphism.
+
+We first recall the group structure on $\pi_n(\MO)$.
+Given classes $[\phi], [\psi] \in \pi_n(\MO)$, pick representatives $\phi, \psi \in \pi_{n+k}(\MO(k))$.
+The sum $[\phi] + [\psi]$ is defined by the map
+\[
+	S^{n+k} \xrightarrow{c} S^{n+k} \vee S^{n+k} \xrightarrow{\phi \vee \psi} \MO(k).
+\]
+
+To see that $\Phi$ is a group homomorphism, we need to show that $\Phi([M_1 \sqcup M_2]) = \Phi([M_1]) + \Phi([M_2])$.
+Pick embeddings $i_j: M_j \to \RR^{n+k}$ (for $j = 1, 2$) such that the $N_j$ lie in distinct hemispheres of $S^{n+k}$.
+Write $\nu_1 = \nu_{M_1}$, $\nu_2 = \nu_{M_2}$ and $\nu_{12} = \nu_{M_1 \sqcup M_2}$.
+Then $\Th(\nu_{12}) \cong \Th(\nu_1) \wedge \Th(\nu_2)$, and $\theta_{12}$ restricts to $\theta_1$ on $M_1$ and $\theta_2$ on $M_2$.
+Using this and the definitions, we see the desired claim.
+
+\subsection{The inverse map}
+
+To get an inverse map $\pi_*(\MO) \to \Nc_*$, let $\psi: S^{n+k} \to \MO(k)$ represent a class in $\pi_n(\MO)$.
+Then the image of $\psi$ lies in $\Th(\gamma_k^{k + \ell}$ for some finite $\ell$.
+Consider the image of the zero section $\sigma: \Gr_k(\RR^{k+\ell}) \to \Th(\gamma_k^{k + \ell})$.
+
+By transversality, we may homotope $\psi$ to a smooth map $\tilde{\psi}$ transverse to $\sigma(\Gr_k(\RR^{k+\ell}))$.
+Then $M = \tilde{\psi}\inv(\sigma(\Gr_k(\RR^{k+\ell}))$ is a smooth $n$-manifold, i.e.\ an element of $\Nc_*$.
+As above, one needs to show that this construction is independent of the choices made.
+It also takes a bit of work to show that this is a homotopy inverse to the above map.
+
+\subsection{(Gabriel Beiner) -- Postscript on stable homotopy theory}
+
+When working fully with spectra, we can view a version of Pontryagin-Thom as saying that the sphere spectrum is a Thom spectrum.
+More precisely, this relies on the notion of a stable normal framing.
+
+\begin{dfn}
+	A \emph{stable normal framing} of a manifold $M$ is an embedding $i: M \to \RR^{n+k}$ such that $\nu_M \cong \RR^k \times M$, considered up to isotopy and stabilization.
+\end{dfn}
+
+If we let $\Omega_n^\st(\pt)$ be the group of cobordism classes of stably normal framed $n$-manifolds, then Pontryagin-Thom tells us that $\Omega_n^\st(\pt) \cong \pi_n^\st(\pt)$.
+At the level of spectra, $\SS$ is the Thom spectrum of stably normal framed $n$-manifolds.
+
+One can use this to compute homotopy groups of spheres!
+For example, $\pi_1^\st = \ZZ / 2 \ZZ$ corresponds to the two stable normal framings of $S^1$.
+One can also see that $\pi_3^\st = \ZZ / 24 \ZZ$ is generated by a K3 surface (noting that it has Euler characteristic $\chi = 24$, giving an upper bound on the order of the group, and using a separate argument to show that the order is actually 24).
+
+\section{2/13 (Jacob Erlikhman) -- Pontryagin-Thom and Configuration Spaces}
+
+Last week, Ward discussed the Pontryagin-Thom isomorphism.
+Given an embedding $M^k \hookrightarrow \RR^{n+k}$, the cobordism class of $M^k$ gives an element of $\pi_k \MO$.
+More generally, using the Pontryagin-Thom collapse map, we see that, for any $X^{n+k}$, the \emph{cohomotopy classes} in $\pi^{n+k}(X)$ correspond to \emph{framed cobordism classes} in $X$.
+This week, we will interpret $\pi^n(X)$ in terms of configuration spaces of points and the Pontryagin-Thom collapse map as an ``electric field map.''
+
+\subsection{Configuration spaces and electric fields}
+
+\begin{dfn}
+	For a topological space $X$ and $k \in \NN$, let $\Conf_k(X) = (X^k \setminus \Delta^k_X) / S_k$.
+	We write $C(X) = \sqcup_k \Conf_k(X)$.
+	For $X = \RR^n$, we write $C_n = C(\RR^n)$.
+\end{dfn}
+
+In physics, given a particle of charge $q$ at $r' \in \RR^n$, we obtain an electric field $E'_{r'}: \RR^n \setminus \{r'\} \to \RR^n$ given by
+\[
+	E'_{r'}(r) = \frac{q}{d(r, r')^3} (r - r').
+\]
+This extends to $E'_{r'}: S^n \to S^n$ if we let $E'_{r'}(r') = \infty$ and $E'_{r'}(\infty) = 0$.
+We can homotope this map so that $r \mapsto \infty$ if $d(r, r') \geq \epsilon$ (for some fixed $\epsilon$).
+In particular, this new map (call it $E_r$) maps the basepoint $\infty$ to $\infty$
+
+Given a collection $c$ of particles at points $r'_1, \dots, r'_k \in \RR^n$, we get an electric field $E_c: S^n \to S^n$.
+This defines a map
+\begin{align*}
+	C_n &\to \Omega^n S^n \\
+	c &\mapsto E_c.
+\end{align*}
+
+We may replace $C_n$ by a monoid $C_n'$ defined as follows.
+For $s, t \in \RR$, let $\RR^n_{s,t} = (\RR \setminus [s, t]) \times \RR^{n-1}$.
+Let $T_t: \RR^n_{0,t'} \to \RR^n_{t,t'+t}$ be the translation map in the first factor.
+As sets, let $C_n' = \bset{(c, t) \in C_n \times \RR}{t \geq 0, c \in \RR^n_{0,t}}$.
+The monoid operation is $(c, t) \cdot (c', t') = (c \cup T_t c', t + t')$.
+
+We want to prove the following.
+
+\begin{thm}
+	$B C_n' \simeq \Omega^{n-1} S^n$.
+\end{thm}
+
+\begin{cor}
+	$C_n \simeq \Omega^n S^n$.
+\end{cor}
+
+\subsection{Pontryagin-Thom collapse}
+
+We defined the Pontryagin-Thom collapse map as follows.
+Given $i: M^k \hookrightarrow \RR^{n+k}$ with tubular neighborhood $N$, we view $\RR^{n+k} \subset S^{n+k}$ and define $\Pi_M: S^{n+k} \to \Th(\nu_M) = S^{n+k} / (S^{n+k} \setminus N)$.
+
+\begin{ex}
+	Suppose $M = c \in C_n$, viewed as a subset of $\RR^n$.
+	Then $\Pi_M: S^n \to \vee_\ell S^n$ (sending everything outside disks around points of $c$ to the basepoint of $\vee_\ell S^n$).
+	The map $E_c: S^n \to S^n$ is homotopic to the composite of $\Pi_M$ with the coproduct map $\vee_\ell S^n \to S^n$.
+	This is easiest to see by drawing pictures.
+\end{ex}
+
+\subsection{Generalization to other $X$}
+
+To extend these claims to other spaces $X$, we need a technical condition.
+
+\begin{dfn}
+	Say that $X$ has a \emph{good basepoint} $0 \in X$ if there exists a homotopy $h_t: X \to X$ such that $h_0 = \id_X$, $h_t(0) = 0$, and $h_1\inv(0)$ is a neighborhood of $0$.\footnote{Essentially: we want a neighborhood of $0$ to be contractible to $0$ via a \emph{global} homotopy.}
+\end{dfn}
+
+This is automatically satisfied for any manifold.
+Throughout we will assume $X$ has a good basepoint $0$.
+
+\begin{dfn}
+	Let $C_n(X)$ be the \emph{configuration space of points in $\RR^n$ labeled by $X$}, i.e.\
+	\[
+		C_n(X) = \{ (c \in C_n, x: c \to X) \} / \sim
+	\]
+	where $(c, x) \sim (c', x')$ if $c \subset c'$ and
+	\[
+		x'(r) = \begin{cases}
+			x(r) & r \in c \\
+			0 & r \not\in c.
+		\end{cases}
+	\]
+\end{dfn}
+
+\begin{thm}
+	If $X$ is path-connected, then $C_n(X) \simeq \Omega^n \Sigma^n X$.
+\end{thm}
+
+Taking $X = S^0$, we obtain the corollary of the previous theorem.
+
+\begin{proof}[Partial proof of theorem]
+	One defines a monoid version $C'_n(X)$ and proves $BC_n'(X) \simeq C_{n-1}(\Sigma X)$.
+	(This is hard.)
+	Then one obtains
+	\begin{align*}
+		C_{n-1}(\Sigma X) &\simeq BC'_n(X) \\
+				  &\simeq \Omega BC'_{n-1}(\Sigma X) \\
+				  &\simeq \Omega C_{n-2}(\Sigma^2 X) \\
+				  &\simeq \dots \\
+				  &\simeq \Omega^{n-1} C_0(\Sigma^n X) \simeq \Omega^{n-1}(\Sigma^n X).
+	\end{align*}
+\end{proof}
+
+\begin{rmk}
+	Joe explained that this can be interpreted in terms of $\infty$-category theory: if $F_k$ is the ``free $\EE_k$-algebra'' functor, then
+	\[
+		F_{n-1}(X) \simeq \onebb \otimes_{F_{n}(\Sigma X)} \onebb.
+	\]
+\end{rmk}
+
+Given a closed framed $M^k \hookrightarrow X^{n+k}$, we can define a Pontryagin-Thom collapse map $\Pi: X \to \Th(\nu_M)$.
+This also gives an ``electric field'' map producing framed cohomotopy classes.
+
+\subsection{Annihilating particles}
+
+Let $M$ be a smooth manifold, and fix a submanifold $M_0 \subset M$.
+Write $C(M, M_0; X)$ for the configuration space of points in $M$ labeled by $X$ which are allowed to annihilate points that live in $M_0$:
+\[
+	(m_1, \dots, m_k, x_1, \dots, x_k) \sim (m_1, \dots, m_{k-1}, x_1, \dots, x_{k-1}) \textrm{ if } m_k \in M_0.
+\]
+
+Let $W$ be an $m$-manifold without boundary containing $M$.
+Write $\hat{T} W$ for the fiberwise compactification of $TW$, and write $\hat{\tau}$ for the fiberwise smash product of $\hat{T} W$ with $X$.
+Thus the fibers of $\hat{\tau} \to W$ are $\hat{T}_w W \wedge X \simeq \Sigma^m X$.
+We have a section $s_\infty: W \to \hat{\tau}$.
+
+\begin{dfn}
+	Given $N_0 \subset N \subset W$, let $\Gamma(N, N_0; X)$ be the space of sections $s$ of $\hat{\tau}$ such that $s|_{N_0} = s_\infty$.
+\end{dfn}
+
+\begin{thm}
+	If $M$ is compact, then $C(M, M_0; X) \xrightarrow{\sim} \Gamma(W \setminus M_0, W \setminus M; X)$.
+\end{thm}
+
+\end{document}
