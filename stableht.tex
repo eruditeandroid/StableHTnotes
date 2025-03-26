@@ -248,7 +248,7 @@ Using this and the definitions, we see the desired claim.
 \subsection{The inverse map}
 
 To get an inverse map $\pi_*(\MO) \to \Nc_*$, let $\psi: S^{n+k} \to \MO(k)$ represent a class in $\pi_n(\MO)$.
-Then the image of $\psi$ lies in $\Th(\gamma_k^{k + \ell}$ for some finite $\ell$.
+Then the image of $\psi$ lies in $\Th(\gamma_k^{k + \ell})$ for some finite $\ell$.
 Consider the image of the zero section $\sigma: \Gr_k(\RR^{k+\ell}) \to \Th(\gamma_k^{k + \ell})$.
 
 By transversality, we may homotope $\psi$ to a smooth map $\tilde{\psi}$ transverse to $\sigma(\Gr_k(\RR^{k+\ell}))$.
@@ -362,7 +362,7 @@ Throughout we will assume $X$ has a good basepoint $0$.
 Taking $X = S^0$, we obtain the corollary of the previous theorem.
 
 \begin{proof}[Partial proof of theorem]
-	One defines a monoid version $C'_n(X)$ and proves $BC_n'(X) \simeq C_{n-1}(\Sigma X)$.
+	One defines a monoid version $C'_n(X)$ of $C_n(X)$ and proves $BC_n'(X) \simeq C_{n-1}(\Sigma X)$.
 	(This is hard.)
 	Then one obtains
 	\begin{align*}
@@ -370,7 +370,7 @@ Taking $X = S^0$, we obtain the corollary of the previous theorem.
 				  &\simeq \Omega BC'_{n-1}(\Sigma X) \\
 				  &\simeq \Omega C_{n-2}(\Sigma^2 X) \\
 				  &\simeq \dots \\
-				  &\simeq \Omega^{n-1} C_0(\Sigma^n X) \simeq \Omega^{n-1}(\Sigma^n X).
+				  &\simeq \Omega^{n-1} C_0(\Sigma^n X) \simeq \Omega^{n-1}(\Sigma^n X). \qedhere
 	\end{align*}
 \end{proof}
 
@@ -404,5 +404,366 @@ We have a section $s_\infty: W \to \hat{\tau}$.
 \begin{thm}
 	If $M$ is compact, then $C(M, M_0; X) \xrightarrow{\sim} \Gamma(W \setminus M_0, W \setminus M; X)$.
 \end{thm}
+
+\section{2/20 (Zechen Bian) -- Introduction to Spectra}
+
+I missed this day.
+If you have notes and would like to share, please contact me!
+
+\section{2/27 (Joe Hlavinka) -- Brave New Algebra}
+
+\subsection{How to think about spectra}
+
+We should think of spectra as \emph{modules over the sphere spectrum}: in symbols, $\Sp = \Mod(\SS)$.
+Recall that, given $E \in \Sp$, we have
+\[
+	E_i(X) = \pi_i(\ul{\Map}(\SS, E \otimes X)) = \pi_0(\ul{\Map}(\SS[i], E \otimes X))
+\]
+where $\otimes$ is the smash product of spectra.
+Shifts here are defined by $X[1] = X \otimes \Sigma^\infty S^1$.
+If we model spectra by $\Omega$-spectra, then we can compute the inverse shift $[-1]$ by $(X_0, X_1, \dots)[-1] = (X_1, X_2, \dots)$.
+Homotopy groups of spectra can be computed via
+\[
+	\pi_i(X) = \pi_0(\Omega^\infty(X[i])).
+\]
+
+The category of spectra satisfies Whitehead's theorem: the functor $\pi_*$ is conservative (if $\pi_*(f)$ is an equivalence, then $f$ is an equivalence).
+However, $\pi_*$ is not fully faithful: there are maps of spectra which are nontrivial but induce trivial maps on homotopy groups.
+
+\begin{ex}
+	$\pi_* \End(H\FF_2)$ is the Steenrod algebra (controlling stable cohomology operations in $\FF_2$-cohomology): most maps here are nontrivial but trivial on homotopy groups.
+\end{ex}
+
+\begin{ex}
+	Stabilizing the Hopf map gives a non-nullhomotopic map $\eta: \SS[1] \to \SS$.
+\end{ex}
+
+The smash product of spectra is inexplicit, but it has a few useful properties:
+\begin{itemize}
+	\item $\SS \otimes X \simeq X$.
+	\item $X \otimes (Y[i]) \simeq (X \otimes Y)[i]$.
+	\item The functor $\Sigma^\infty$ is symmetric monoidal: $\Sigma^\infty(X \wedge Y) \simeq \Sigma^\infty X \otimes \Sigma^\infty Y$.
+	\item $\otimes$ preserves colimits in each variable.
+	\item $\otimes$ has a right adjoint $\ul{\Map}$: $\Map(X \otimes Y, Z) \simeq \Map(X, \ul{\Map}(Y, Z))$.
+\end{itemize}
+
+\subsection{Ring spectra}
+
+\begin{dfn}
+	A spectrum $X$ is a \emph{ring spectrum} if there exists a multiplication map $\mu: X \otimes X \to X$ together with homotopy coherence data for the usual associativity diagrams.
+\end{dfn}
+
+\begin{dfn}
+	A ring spectrum $X$ is an \emph{$\EE_n$-ring spectrum} if, for all $m$, the $m$-fold multiplication $X^{\otimes m} \to X$ factors through
+	\[
+		X^{\otimes m} \to (X^{\otimes m} \otimes \Conf_m(\RR^n))_{hS_m}
+	\]
+	where $\Conf_m(\RR^n)$ is the space of ordered collections of $m$ points in $\RR^n$, and $(-)_{hS_m}$ is the homotopy quotient by the usual $S_m$-action.\footnote{That is, $(-)_{hS_m}$ is a $BS_m$-indexed colimit in $\Sp$.}
+	We also require that these factorizations come with coherence data.
+\end{dfn}
+
+\begin{rmk}
+	We are being cavalier here: one should really talk about \emph{operads} to make sense of this.
+	The data we've given is not enough in general
+\end{rmk}
+
+The notion of ``weak $\EE_n$-ring spectrum'' captures some sort of commutativity of the multiplication.
+Note that commutativity is \emph{data}: we must encode not just that two elements commute with each other but \emph{how they do so}.
+We want to interpolate between complete noncommutativity ($\EE_1$) and a contractible space of ways to be commutative ($\EE_\infty$).
+
+If $X$ is an $\EE_1$-algebra, then $\pi_*(X)$ is an associative ring.
+If $X$ is an $\EE_2$-algebra, then $\pi_*(X)$ is furthermore commutative and also comes with interesting extra operations.
+
+\begin{ex}
+	$\SS$ is an $\EE_\infty$-ring spectrum.
+\end{ex}
+
+\begin{ex}
+	$\SS / p = \cofib(\SS \xrightarrow{p} \SS)$ is not even a ring spectrum.
+	For example, $\pi_0(\SS / 2) = \ZZ / 2$, so if $\SS / 2$ had a ring structure, every element of $\pi_*(\SS / 2)$ would have to be $2$-torsion.
+	However, $\pi_0(\SS / 2) = \ZZ / 4 \ZZ$ (as one can see using Toda brackets), giving a contradiction.
+\end{ex}
+
+\begin{ex}
+	The spectrum $\FF_2 = H\FF_2$ is $\EE_\infty$.
+	The composite $X \to X \otimes X \to \FF_2 \otimes F_2 \to \FF_2$ classifies $\phi \mapsto \phi \cup \phi$ in cohomology.
+	Factorizing the two-fold multiplication map ends up introducing a way to act by $H^*(\RR\PP^\infty, \FF_2) = \FF_2[[z]]$, which controls the Steenrod squares $\Sq$.
+	For $\deg \phi = n$, the Steenrod square $\Sq_{n-i}(\phi)$ is given by $\mu^*(\phi \cdot z^i)$.
+\end{ex}
+
+\section{3/6 (Gabriel Beiner) -- Generalized Cohomology Operations and the Atiyah-Hirzebruch Spectral Sequence}
+
+\subsection{Cohomology Operations and Steenrod Algebras}
+
+Let $E$ be a spectrum with cohomology theory $E^*$ and homology theory $E_*$.
+
+\begin{dfn}
+	An \emph{$E$-cohomology operation} is a natural transformation $\phi: E^i \to E^{i+n}$.
+	A \emph{stable cohomology operation} is a family of cohomology operations (of the same degree) $\{ \phi_i \}_{i \in \ZZ}$ satisfying $\Sigma \circ \phi_i = \phi_{i+1} \circ \Sigma$.
+\end{dfn}
+
+A stable cohomology operation is the same as an endomorphism $\phi: E \to E$ in $\Sp$.
+By the Yoneda lemma, the algebra of stable cohomology operations is $E^*(E)$.
+
+\begin{dfn}
+	The \emph{$E$-Steenrod algebra} is $E_*(E)$.
+	One often prefers to consider the dual $E_*(E) = \pi_*(E \wedge E)$, as this is better behaved in general.
+\end{dfn}
+
+\begin{thm}
+	If $E$ is a nice ring spectrum, then $(\pi_* E, E_* E)$ is a \emph{Hopf algebroid}.
+\end{thm}
+
+\begin{ex}
+	If $E = HR$ is an Eilenberg-Mac Lane spectrum, then we are considering classical cohomology operations.
+	Over $\QQ$, there are no interesting cohomology operations because $H\QQ$ is the rationalization of $\SS$.
+	Thus, over $\ZZ$, all of the cohomology operations come from Bockstein maps and torsion operations.
+	(The Bockstein map is $\beta: H(\ZZ/p) \to H\ZZ[1]$ induced from $H\ZZ \xrightarrow{p} H\ZZ$.)
+	
+	To compute the Steenrod algebra of $H\ZZ/p$, we seek to compute $H^*(K(\ZZ/p, *), \ZZ/p)$.
+	This can be computed using the Serre spectral sequence for the path space fibration
+	\[
+		\begin{tikzcd}
+			K(\ZZ/p, n - 1) \rar & \pt \rar & K(\ZZ/p, n)
+		\end{tikzcd}
+	\]
+
+	For $p = 2$, performing this calculation shows that the $H\ZZ/2$-Steenrod algebra $\Ac^*$ is generated by the \emph{Steenrod squares} $\Sq^i: H^n(X; \ZZ/2) \to H^{n+i}(X; \ZZ/2)$, which are characterized by
+	\begin{enumerate}
+		\item $\Sq^0 = \Id$.
+		\item For $\deg(x) < i$, $\Sq^i(x) = 0$.
+		\item For $\deg(x) = i$, $\Sq^i(x) = x^2$.
+		\item (Cartan formula) $\Sq^n(x \cup y) = \sum_{i=0}^n \Sq^i(x) \cup \Sq^{n-i}(y)$.
+	\end{enumerate}
+	These satisfy the \emph{Adem relations}, which can be written out explicitly.
+	One sees that the dual $\Ac_*$ is a commutative Hopf algebra.
+	It is also possible to show that $\Sq^1 = \beta_2$, the mod 2 Bockstein.
+
+	Over $\ZZ/p$, we can show that the $H\ZZ/p$-Steenrod algebra $\Ac_p^*$ is generated by the \emph{$p$th power operations} alongside the mod $p$ Bockstein.
+\end{ex}
+
+\begin{ex}
+	For $E = \KU$, there are \emph{Adams operations} $\phi^k$ satisfying $\psi^k(\Lc) = \Lc^{\otimes k}$ for line bundles $\Lc$.
+	This is extended to arbitrary classes using the splitting principle.
+	One can show that these satisfy
+	\begin{enumerate}
+		\item $\psi^k(x + y) = \psi^k(x) + \psi^k(y)$.
+		\item $\psi^k(xy) = \psi^k(x) \psi^k(y)$.
+		\item $\psi^k \circ \psi^\ell = \psi^{k \ell}$.
+	\end{enumerate}
+	However, these operations are \emph{unstable} (except $\psi^{\pm 1}$).
+
+	By work of Adams and Clarke, it turns out that $\KU_*(\KU)$ is quite complicated.
+	In particular, $\KU_*(\KU)$ is a free module over $\pi_*(\KU)$ with infinitely many generators, so $\KU^*(\KU)$ is uncountable.
+	The complexity of $\KU^*(\KU)$ can be predicted using chromatic homotopy theory.
+\end{ex}
+
+\begin{ex}
+	By work of Landweber and Novikov, $\MU_*(\MU) = \pi_*(\MU)[b_1, b_2, \dots]$ where $\deg(b_i) = 2i$.
+	It follows that $\MU^*(\MU)$ has a ``formal basis'' consisting of Landweber-Novikov operations $S_\omega$ indexed by integer partitions $\omega$.
+	These satisfy $S_n \circ S_n = (n + 1) S_{2n} + 2 S_{(n,n)}$.
+\end{ex}
+
+\begin{ex}
+	After $p$-localizing, $\MU$ becomes a wedge of copies of the Brown-Peterson spectrum $\BP$ (which also relates to Morava $K$-theories).
+	We get $\BP_*(\BP) = \pi_*(\BP)[t_1, t_2, \dots]$ where $\deg(t_i) = 2(p^i - 1)$.
+	Here $\pi_*(\BP) = \ZZ_{(p)}[v_1, \dots,]$.
+	The Steenrod algebra $\BP^*(\BP)$ has a formal basis consisting of Quillen operations $r_\omega$.
+\end{ex}
+
+\subsection{Postnikov towers and $k$-invariants}
+
+We'll spoil the punchline now: the $k$-invariants in the Postnikov tower of a spectrum are the differentials in the Atiyah-Hirzebruch spectral sequence.
+Let's unpack what this means.
+
+Given a CW complex $X$ on which $\pi_1$ acts trivially on all higher homology groups,\footnote{This assumption can be weakened if we work with local systems} we can form a space $X_n$ by killing off the $i$th homotopy groups for $i > n$ (by attaching cells).
+We have maps $X_n \to X_{n-1}$, which we can take to be fibrations.
+The homotopy fibers of these maps are Eilenberg-Mac Lane spaces $K(\pi_n, n)$.
+
+We can use this to inductively build $X$ by taking fibrations over each $X_i$.
+We start with $X_1$, and then consider $X_2 \to X_1$ as a fibration with fiber $K(\pi_2, 2)$.
+This is classified by a map $k^1: X \to BK(\pi_2, 2) = K(\pi_2, 3)$, called a \emph{$k$-invariant}.
+Note that $k^1$ may be viewed as an element of $H^3(X_1; \pi_2)$.
+More generally, $X^{i+1} \to X_i$ is classified by the \emph{Postnikov $k$-invariant} $k^i \in H^{i+2}(X_i, \pi_{i+1})$.
+The $k$-invariants are the fundamental obstructions to trivializing $X_{i+1} \to X_i$.
+
+\begin{thm}
+	In this setting, we have $X \simeq \varprojlim X_i$.
+	In particular, $X$ is determined by its homotopy groups and Postnikov $k$-invariants.
+\end{thm}
+
+Note that $k^1$ (for a fixed space $X$) is a cohomology operation (since it gives a map $K(\pi_1, 1) \to K(\pi_2, 3)$).
+The same is not quite true for $k^2$: the map $K(\pi_1, 1) \to K(\pi_3, 4)$ is only well-defined as a map $\ker k_1 \to \coker(K(\pi_2, 2) \to K(\pi_3, 4)$.
+We can say $k^2$ is a \emph{secondary cohomology operation}: it is well-defined as a map from the kernel of one cohomology operation to the cokernel of another.
+Similarly, $k^3$ is a ``tertiary cohomology operation,'' and more generally $k^i$ gives a partially defined cohomology operation.
+
+This gives a general strategy for constructing cohomology operations.
+In this way we can construct Massey products, Toda brackets, and residues of Adem relations.
+
+\begin{ex}
+	For a high dimensional sphere $S^n$, the EM spaces appearing in the Postnikov tower are $K(\ZZ, n)$, $K(\ZZ/2, n+1)$, $K(\ZZ/2, n+2), K(\ZZ/24, n+4), \dots$.
+	Letting $\iota_n \in H^n(K(\ZZ/p, n); \ZZ/p)$, we have:
+	\begin{enumerate}
+		\item $k^1 = \Sq^2 \iota_n \in H^{n+2}(K(\ZZ, n); \ZZ/2)$
+		\item $k^2 = \Sq^2 \iota_{n+1} \in H^{n+3}(K(\ZZ/2, n+1); \ZZ/2)$
+		\item $k^3 = \Sq^4 \iota_n + P_3^1 \iota_n \in H^{n+4}(K(\ZZ/2, n+2); \ZZ/24)$
+		\item $\dots$
+	\end{enumerate}
+\end{ex}
+
+If $X$ is a spectrum, we can also try to construct Postnikov towers.
+However, especially if $X$ is not bounded below, there may not be a natural ``starting point'' for the Postnikov tower.
+Instead, we fix a lower truncation $X\angles{r}$ and build a Postnikov tower for this out of EM spectra.
+Considering these towers for all $r$, we end up with a 2-parameter family of $k$-invariants $k^{r,s}$.
+These can be difficult to compute!
+However, these produce \emph{collections} of cohomology operations.
+
+\subsection{3/13 -- Addendum}
+
+The secondary cohomology operations above can be understood in terms of Toda brackets.
+Let's consider this for the Postnikov tower of $\SS$.
+Given $x: X \to K(\ZZ, n)$ such that $\Sq^2 \circ x = 0$, the universal properties of cofibers produce a ``Toda bracket'' $\Sigma X \to K(\ZZ/2, n+4)$.
+Via the loop-suspension adjunction, this gives a map $X \to K(\ZZ/2, n+3)$.
+This is our secondary cohomology operation!
+
+\section{3/13 (Gabriel Beiner) -- The Atiyah-Hirzebruch Spectral Sequence}
+
+\subsection{Overview of the sequence}
+
+\begin{thm}[Whitehead]
+	Let $E$ be a spectrum and $X$ a finite CW complex.
+	There are spectral sequences
+	\begin{align*}
+		E^2_{p,q} &= H_p(X; E_q(\pt)) \Rightarrow E^\infty_{p,q} = \gr(E_{p+q}(X)) \\
+		E_2^{p,q} &= H^p(X; E^q(\pt)) \Rightarrow E_\infty^{p,q} = \gr(E^{p+q}(X)).
+	\end{align*}
+\end{thm}
+
+These spectral sequences were originally discovered by Whitehead but was first published by Atiyah and Hirzebruch.
+Thus the spectral sequences here are known as the \emph{Atiyah-Hirzebruch spectral sequences}.
+
+\begin{rmk}
+	\begin{enumerate}
+		\item Given a fibration $F \to X \to B$, we obtain an \emph{Atiyah-Hirzebruch-Serre spectral sequence}
+			\[
+				H_*(B; E_*(F)) \Rightarrow E_*(X).
+			\]
+			The theorem above handles the case of $\pt \to X \to X$.
+		\item We can generalize to the case where $X$ is a spectrum, but there are convergence issues if $X$ is unbounded.
+		\item Spectral sequences arise from filtrations or more generally Massey exact couples.
+			There are a few ways to use this to produce the AHSS.
+			Cartan and Eilenberg obtained the AHSS using the filtration of $X$ by skeleta.
+			Maunder obtained the AHSS instead using the Postnikov tower of $E$.
+		\item Maunder's approach implies that the differentials in the AHSS are the Postnikov $k$-invariants of $E$.
+		\item If $E$ is a ring spectrum, then the cohomological AHSS is multiplicative: each page has a multiplication and the differentials are derivations.
+			This is fairly restrictive: for $H\ZZ/2 \to H\ZZ/2$, the derivations are Milnor primitives $Q_i = [\Sq^{2^i}, Q_{i-1}] \Sq^1$.
+		\item The AHSS is natural / functorial in $X$ and $E$.
+			In particular, isomorphisms on homology (with $\ZZ$ coefficients) induce isomorphisms on generalized homology.
+		\item The $\QQ$-localization of any spectrum is a wedge sum of shifted $H\QQ$'s (if we ignore the ring structure).
+			Thus $\QQ$-localizing the AHSS creates a spectral sequence for which all differentials are trivial.
+			We end up with $E^*(X) \otimes \QQ \simeq H^*(X; \QQ) \otimes E^*(\pt)$.
+			This recovers the Chern character isomorphism for $K$-theory: $\KU(X) \otimes \QQ \simeq H^*(X; \QQ) \otimes \KU^*(\pt)$!
+	\end{enumerate}
+\end{rmk}
+
+\begin{ex}
+	For $E = \KU$, the $E_2$ page of the cohomological AHSS has odd rows all zero and even rows given by $H^*(X)$.
+	We can compute
+	\[
+		\KU^*(\CC\PP^n) = \begin{cases}
+			\ZZ^{n+1} & * \textrm{ even} \\
+			0 & * \textrm{ odd}
+		\end{cases}
+	\]
+	because all differentials are forced to be trivial.
+	The multiplicative structure can be found as $\KU^*(\CC\PP^n) = \ZZ[\gamma] / \gamma^{n+1}$ where $\gamma = [\Oc(-1)] - 1$.
+	It is a good exercise to compute $\KU(\RR\PP^n)$ and $\KU(\RR\PP^3 \times \RR\PP^4)$.
+	This latter computation can be performed using K\"unneth and implies that the first nontrivial differential of the AHSS is $d_3 = \beta \circ \Sq^2 \circ r: H^*(X; \ZZ) \to H^{*+3}(X; \ZZ)$.
+\end{ex}
+
+\begin{ex}
+	For $\KO$, the $E_2$ page of the cohomological AHSS has rows given by $0$, $H^*(X; \ZZ/2)$, or $H^*(X; \ZZ)$ according to Bott periodicity.
+	The differentials can be computed using Steenrod squares.
+\end{ex}
+
+\subsection{Steenrod's problem}
+
+General spectral sequence theory gives an ``edge morphism'' $E^\infty_{*,0} \rightarrow E^2_{*,0}$.
+If the spectral sequence degenerates, then the edge morphism is surjective.
+For the AHSS, this is $E_*(X) \to H_*(X; \pi_0(E))$ induced by the Hurewicz map $E \to H\pi_0(E)$.
+
+\begin{ex}
+	A theorem of Thom says that $\MO$ is a wedge sum of shifted $H\ZZ/2$'s, i.e.\ there are no Postnikov invariants.
+	Thus the AHSS degenerates and we get $\Omega^\Orm_*(X) \simeq H_*(X; \Omega^\Orm_*(\pt))$.
+	The edge morphism is $\Omega^\Orm_n(X) \to H_n(X; \ZZ/2)$ given by $(f: M^n \to X) \mapsto f_*[M]$.
+	It follows that all homology classes mod $2$ can be realized by unoriented bordism classes.
+	This resolves Steenrod's problem for $\ZZ/2$ coefficients!
+\end{ex}
+
+\begin{ex}
+	What happens for $\MSO$?
+	Localizing $\MSO$ at $p = 2$ gives a wedge of $H\ZZ/2$'s and $H\ZZ_{(2)}$'s.
+	Localizing $\MSO$ at $p \neq 2$ gives a wedge of Brown-Peterson spectra.
+	One can compute the groups $\Omega_*^\SO$ and the corresponding differentials for small $*$.
+	We get $\Omega_i^\SO(X) = H_i(X)$ for $0 \leq i \leq 3$ and $\Omega_4^\SO(X) = H_4(X) \oplus \ZZ$.
+	These methods can be used to find a specific example where Steenrod's problem fails (it lives in $H^7(B\ZZ/3^2)$).
+\end{ex}
+
+\section{3/20 (Swapnil Garg) -- The Adams Spectral Sequence}
+
+\subsection{Steenrod squares}
+
+Let $\Ac = \Ac_2$ be the Steenrod algebra $[H\FF_2, H\FF_2]$.
+This has an additive basis given by $\Sq^I = \Sq^{i_1} \Sq^{i_2} \dots$ where $I$ is \emph{admissible}: $i_k \geq 2 i_{k+1}$ for all $k$.\footnote{For Steenrod algebras $\Ac_p$ with $p \neq 2$, we also have to include Bockstein operations.}
+The \emph{excess} $\operatorname{exc}(I)$ is $\sum_k (i_k - 2 i_{k+1})$.
+
+\begin{thm}[Serre]
+	The cohomology ring $H^*(K(\FF_2, n), \FF_2)$ is a polynomial algebra in $\Sq^I e_n$ for $\operatorname{exc}(I) < n$.
+\end{thm}
+
+\subsection{The Adams resolution}
+
+To compute things, we can use fibrations together with the Leray-Serre spectral sequence.
+One way to get these fibrations is by killing homotopy groups.
+We use the ``Whitehead tower'' construction: if the first nontrivial homotopy group of $X$ is $\pi$ in degree $n$, we get a map $X \to K(\pi, n)$.
+The homotopy fiber of this map is called $X|_{n+1}$.
+We set up a spectral sequence to compute the homology groups of $X|_{n+1}$ and use these to compute $\pi_{n+1}(X|_{n+1}) = \pi_{n+1}(X)$.
+In general, this is hard to use!
+
+The idea of Adams is to kill $x \Sq^i(x)$ as well.
+These give resolutions of spaces giving a free $\Ac$-resolution of $H^*(X)$.
+
+\begin{dfn}
+	An \emph{Adams resolution} of $X_0 = X$ is a sequence of spaces and maps
+	\[
+		\begin{tikzcd}
+			\dots \rar["i_2"] & X_2 \rar["i_1"] & X_1 \rar["i_0"] & X_0
+		\end{tikzcd}
+	\]
+	such that each $\cofib(i_s)$ is a sum of shifts of $H\FF_p$ and each $H^*(\cofib(i_s)) \to H^*(X_s)$ is an epimorphism.
+\end{dfn}
+
+The Adams resolution gives a free $\Ac$-resolution
+\[
+	\begin{tikzcd}
+		H^*(X_0) & H^*(\cofib(i_0)) \lar & H^*(\Sigma \cofib(i_1)) \lar & H^*(\Sigma^2 \cofib(i_2)) \lar & \dots.
+	\end{tikzcd}
+\]
+
+\subsection{The Adams spectral sequence}
+
+We can use the Adams spectral sequence to ``compute'' $[X, Y]$:
+\[
+	E_2^{s,t} = \Ext_\Ac^{s,t}(H^* Y, H^* X) \Rightarrow [X, \hat{Y}_{(p)}]
+\]
+Here $\Ext^{s,t}$ refers to the $t$th component of $X^s$.
+The differential here is different from Serre's convention: it is a map $E_r^{s,t} \to E_r^{s+r,t+r-1}$.
+Here $\hat{-}_{(p)}$ is $p$-completion, which satisfies
+\[
+	\pi_i(\hat{Y}_p) = \widehat{\pi_i(Y)}_{(p)}
+\]
+
+Let $X = Y = \SS$.
+Then the Adams spectral sequence is multiplicative and gives the composition product in stable homotopy groups of spheres.
 
 \end{document}
