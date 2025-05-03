@@ -766,4 +766,253 @@ Here $\hat{-}_{(p)}$ is $p$-completion, which satisfies
 Let $X = Y = \SS$.
 Then the Adams spectral sequence is multiplicative and gives the composition product in stable homotopy groups of spheres.
 
+\section{4/10 (Joe Hlavinka) -- Bousfield localization}
+
+Some references for today include:
+\begin{itemize}
+	\item Bousfield, \emph{Localization of spectra with respect to homology}
+	\item Lurie, lecture 20 on chromatic homotopy theory
+	\item Random nLab articles
+\end{itemize}
+
+The Adams spectral sequence gives (in particular)
+\[
+	E_2^{s,t} = \Ext_\Ac^{s,t}(\FF_2, \FF_2) \Rightarrow \pi_{t-s}(\hat{\SS}_2).
+\]
+We have $\pi_{t-s}(\hat{\SS}_2) \simeq \pi_{t-s}(\SS) \otimes \ZZ_2$.
+Our goal is to understand how this $\hat{(-)}_p$ construction behaves in general.
+
+\subsection{Some basic constructions}
+
+Suppose an abelian group $G$ can be written as $G = \colim_I \ZZ$.
+We define $\SS_G = \colim_I \SS$ (where the maps agree with the maps of abelian groups on $\pi_0$).
+
+\begin{ex}
+	The \emph{mod $p$ Moore spectrum} is $\SS / p = \SS_{\ZZ/p} = \cofib(\SS \xrightarrow{p} \SS)$.
+\end{ex}
+
+\begin{ex}
+	We have 
+	\[
+		\SS\left[\frac{1}{n}\right] = \SS_{\ZZ\left[\frac{1}{n}\right]} = \colim \left( \SS \xrightarrow{n} \SS \xrightarrow{n} \dots \right).
+	\]
+\end{ex}
+
+More generally, if $E$ is an $\EE_2$-ring spectrum and $x \in \pi_*(E)$, then 
+\[
+	E\left[\frac{1}{x}\right] = \colim \left( E \xrightarrow{x} E \xrightarrow{x} \dots \right).
+\]
+is the initial $\EE_2$-ring spectrum under $E$ such that $x$ is invertible in $\pi_*\left(E\left[\frac{1}{x}\right]\right)$.
+
+\subsection{Bousfield localization}
+
+Let $E \in \Sp$.
+
+\begin{dfn}
+	A map $f: X \to Y$ in $\Sp$ is an \emph{$E$-equivalence} if $f \otimes \id: X \otimes E \to Y \otimes E$ is an equivalence.
+\end{dfn}
+
+\begin{ex}
+	The natural map $\SS \to H\QQ$ (factoring through $H\ZZ = \tau_{\leq 0} \SS$) is an $H\QQ$-equivalence.
+	This relies on using $H\QQ \otimes H\QQ \simeq H\QQ$ (more generally, $\pi_*(X \otimes H\QQ) \simeq \pi_*(X) \otimes_\ZZ H\QQ$).
+	Note that this is a special feature of $H\QQ$: for $H\FF_2$, we have $\pi_*(H\FF_2 \otimes H\FF_2) \simeq \Ac$.
+	One can write $H\QQ$ as the localization of $\SS$ at all nonzero elements of $\pi_0(\SS) = \ZZ$.
+\end{ex}
+
+\begin{dfn}
+	A spectrum $X$ is \emph{$E$-acyclic} if $X \to \pt$ is an $E$-equivalence, i.e.\ $X \otimes E$ is contractible.
+\end{dfn}
+
+\begin{dfn}
+	A spectrum $X$ is \emph{$E$-local} if, whenever $Y$ is $E$-acyclic, every $f: Y \to X$ is nullhomotopic.
+\end{dfn}
+
+Another way of saying this is as follows: $X$ is $E$-local if, for every $E$-equivalence $g: A \to B$, the pullback $g^*: [B, X] \to [A, X]$ is an equivalence.
+
+\begin{ex}
+	The spectrum $\SS / p$ is $H\QQ$-acyclic: $\pi_*(\SS / p \otimes H\QQ) = 0$.
+	In fact, we have a stronger statement: $\SS / p$ is $\SS\left[\frac{1}{p}\right]$-acyclic.
+\end{ex}
+
+\begin{prop}
+	If $E$ is a ring spectrum and $X \in E\dMod$, then $X$ is $E$-local.
+\end{prop}
+
+\begin{proof}
+	Suppose $Y$ is $E$-acyclic and we are given a map $f: Y \to X$.
+	Then $f \otimes E: Y \otimes E \to X$ is just a map $0 \to X$ in $E\dMod$, hence must be nullhomotopic.
+	It follows by adjunction that $f = 0$.
+\end{proof}
+
+\begin{thm}[Bousfield]
+	Given $X, E \in \Sp$, there exists a unique cofiber sequence
+	\[
+		\begin{tikzcd}
+			G_E(X) \rar & X \rar["\phi"] & L_E(X)
+		\end{tikzcd}
+	\]
+	such that $G_E(X)$ is $E$-acyclic, $L_E(X)$ is $E$-local, and $\phi$ is an $E$-equivalence.
+\end{thm}
+
+This gives a semiorthogonal decomposition of $\Sp$ into full subcategories of $E$-local and $E$-acyclic objects.
+The functor $L_E: \Sp \to \Sp_{L_E}$ (the category of $E$-local spectra) is a \emph{reflective localization}: $L_E$ preserves colimits and has a fully faithful right adjoint.
+
+\begin{ex}
+	For any $X$, we have $L_{\SS\left[\frac{1}{p}\right]} X \simeq X \otimes \SS\left[\frac{1}{p}\right]$.
+\end{ex}
+
+The localization $L_{\SS\left[\frac{1}{p}\right]}$ is a \emph{smashing localization}.
+More generally, $L_E$ is smashing if $L_E(-) = - \otimes F$ for some $F$ (with possibly $F \neq E$).
+Unfortunately, examples of such are rather rare: assuming some finiteness conditions, the only examples are localizing along $\SS\left[\frac{1}{n}\right]$ or along Morava $E$-theories.
+One can show that $L_{\SS_G} X \simeq L_{HG} X$ is $X$ is connective, but $L_{H\ZZ\left[\frac{1}{p}\right]}$ is not smashing.
+
+\begin{ex}
+	For any $X$ with finitely generated homotopy groups, we have
+	\[
+		L_{\SS/p} X = \lim \left(\dots X / p^n \to X / p^{n-1} \to \dots \to X / p \right) =: \hat{X}_p.
+	\]
+	In particular, $L_{H\FF_2} \SS \simeq \hat{\SS}_2$.
+\end{ex}
+
+If $X$ is a decent spectrum and $E$ is an $\EE_n$-algebra with $n \geq 2$, we can write $L_E X \simeq \Tot(X \otimes_\SS E^{\bullet + 1})$, where $\Tot$ here is totalization of a cosimplicial spectrum.
+This gives us a filtration $\hat{X}$ of $X$ such that $\hat{X}(n)$ is the totalization of the first $n$ terms of the cosimplicial spectrum.
+The colimit of the maps $\hat{X}(0) \to \hat{X}(1) \to \dots$ is $L_E X$.
+The Adams spectral sequence may be interpreted as the spectral sequence of this filtration (for $E = \FF_2$ and $X = \SS$).
+The Adams-Novikov spectral sequence arises from $E = \MU$ or $\BP$ and $X = \SS$.
+
+\section{4/24 (Swapnil Garg and Joe Hlavinka) -- $\pi_* \MU$ is the Lazard ring}
+
+\subsection{The upshot}
+
+We want to show $\pi_* \MU \cong L$, where $L$ is the Lazard ring corepresenting formal group laws.
+The ring $\MU_* \MU = L[\beta_1, \dots, ]$ corepresents pairs of formal group laws together with an isomorphism between the two.
+Usually when people write ``$\Spec \MU$'' they are abusing notation and really meaning the stack quotient $[\Spec \pi_* \MU / \MU_* \MU]$.
+After $p$-localizing we get moduli stacks of formal group laws.
+The spectral version of these objects may not be as useful as the non-spectral versions.
+
+Note that $\MU$ corepresents complex orientations among ring spectra.
+
+\subsection{Review}
+
+\begin{dfn}
+	A \emph{complex-orientable cohomology theory} $E$ is a spectrum $E$ such that $E^2(\CC\PP^\infty) \twoheadrightarrow E^2(\CC\PP^1)$.
+\end{dfn}
+
+\begin{dfn}
+	A \emph{complex orientation} of a complex-orientable $E$ is a choice of $\theta \in \tilde{E}^2(\CC\PP^\infty)$ which maps to $1 \in \pi_0(E)$.
+\end{dfn}
+
+\begin{ex}
+	Here are some complex-orientable spectra:
+	\begin{itemize}
+		\item $\KU$
+		\item $\MU$
+		\item Brown-Peterson spectra $\BP$
+		\item $HR$ for any $R$
+		\item Morava $K$-theories $K(n)$
+		\item Morave $E$-theories $E(n)$
+		\item Elliptic cohomology theories
+	\end{itemize}
+	Of these, $\KU$, $\MU$, $\BP$, $H\QQ$, $H\ZZ/p$, $E(n)$, and elliptic cohomology theories are Landweber exact (i.e.\ can be recovered from their formal group laws).
+\end{ex}
+
+\begin{ex}
+	Here are some non-complex-orientable spectra:
+	\begin{itemize}
+		\item $\KO$
+		\item $\MO$
+    \item Topological modular forms $\mathrm{tmf}$
+		\item $\SS$
+    \item $\mathrm{MSpin}$
+	\end{itemize}
+\end{ex}
+
+If $E$ is complex oriented, the \emph{Atiyah-Hirzebruch spectral sequence}
+\[
+	E^{pq}_2 = H^p(X; E^q(\pt)) \Rightarrow E^{p+q}(X)
+\]
+will degenerate if $X$ has only even cohomology (by some lengthy homological algebra which possibly simplifies if $X = \CC\PP^\infty$).
+It follows that $E^*(\CC\PP^n) = (\pi_* E)[t] / t^{n+1}$ and $E^*(\CC\PP^\infty) = (\pi_* E)[[t]]$ (using a direct product convention for cohomology).
+We can write $E^*(\CC\PP^\infty \times \CC\PP^\infty) = (\pi_* E)[[x, y]]$.
+
+The multiplication $m: \CC\PP^\infty \times \CC\PP^\infty \to \CC\PP^\infty$ gives a map
+\begin{align*}
+	(\pi_* E)[[t]] &\to (\pi_* E)[[x, y]] \\
+	t &\mapsto f(x, y).
+\end{align*}
+
+This defines a (1-dimensional, commutative) \emph{formal group law}:
+\begin{itemize}
+	\item $f(x, 0) = f(0, x) = x$
+	\item $f(x, y) = f(y, x)$
+	\item $f(f(x, y), z) = f(x, f(y, z))$
+\end{itemize}
+over $R = \pi_* E$.
+
+\begin{prop}
+	There is a ring $L$, the \emph{Lazard ring}, such that $\Hom(L, R)$ classifies formal group laws on $R$.
+\end{prop}
+
+\begin{thm}
+	There is an equivalence $\pi_* \MU \simeq L$.
+\end{thm}
+
+\subsection{Landweber exactness}
+
+We have $\pi_* \MU_{(p)} = \ZZ[v_i, x_j]$ where $|v_i| = 2p^i - 2$, $|x_j| = 2j$, and there are no $x_{p^i - 1}$'s.
+Suppose $E$ is a ring spectrum and $\pi_* E$ is an even-graded $\MU_{(p)*}$-module such that $(p, v_1, \dots, v_n)$ is a regular sequence in $\pi_* E$.
+Then $E_*(X) = \MU_{(p)*}(X) \otimes_{\MU_{(p)*}} \pi_* E$ defines a homology theory of $\Sp_{(p)}$, i.e.\ is a $p$-local spectrum.
+
+\section{5/1 (Kabir Kapoor) -- Quillen's Theorem}
+
+Today we will discuss a proof by Quillen of his theorem equating $\pi_* \MU$ with the Lazard ring.
+This is a relatively simple proof inspired by Grothendieck's theory of motives.
+
+One insight is that we can understand cohomology theories by their values on smooth manifolds, i.e.\ by considering the functors $\Man\op \to \Ab$.
+From this perspective, cobordism is the universal functor $\Man\op \to \Ab$ which admits pushforwards for proper ``oriented'' maps (where the notion of ``oriented'' relies on the structure group we are considering).
+
+\subsection{Motivation: Unoriented bordism}
+
+For a space $X$, let $C_n(X)$ be the commutative monoid of $n$-manifolds with boundary over $X$ (i.e.\ maps $f: N^n \to X$, considered with $\sqcup$ as monoid structure).\footnote{Often one takes $X$ to be a smooth manifold and considers only smooth maps of manifolds.}
+There are natural maps $\partial_n: C_n(X) \to C_{n-1}(X)$ (by taking boundaries of manifolds), so we get a ``chain complex'' of commutative monoids.
+The cohomology monoids turn out to be groups (any manifold is bordant to itself with orientation reversed).
+We call these groups $\Omega^\Orm_n(X)$.
+
+The Pontryagin-Thom theorem tells us that $\Omega^\Orm(X) = [\SS, \MO \wedge \Sigma^\infty_+ X]$.
+In particular, we have $\Omega^\Orm_*(\pt) \xrightarrow{\sim} \pi_* \MO$, giving a relationship between manifold theory and homotopy theory.
+We will show that this relates to the Lazard ring, giving a connection to number theory / local class field theory.
+
+\subsection{Introducing the complex numbers}
+
+\begin{dfn}
+	Let $f: N \to M$ be an ``even-dimensional'' map of manifolds, i.e.\ the (local) relative dimension is always even.\footnote{This generality is only there to account for the case where $M$ is disconnected.}
+	A \emph{complex orientation} of $f$ is a choice of:
+	\begin{itemize}
+		\item A homotopy class $\nu \in [N, \BU]$, and
+		\item An embedding $i: N \hookrightarrow M \times \RR^{2n}$ over $M$, together with a complex structure on the normal bundle classified by $\nu$, considered up to stable equivalence (i.e.\ isotopy and Whitney sum with $M \times \RR^2$).
+	\end{itemize}
+\end{dfn}
+
+If $f$ is odd-dimensional, we consider embeddings into $M \times \RR^{2n+2}$ instead.
+
+Given a complex-oriented $(f, \nu): N \to M$ and a transversal map $g: Y \to M$ , we can construct a natural complex orientation on the pullback $Y \times_M N \to Y$.
+There is a natural definition of what it means for $(f_0, \nu_0): N_0 \to M$ and $(f_1, \nu_1): N_1 \to M$ to be bordant: this is witnessed by a diagram with Cartesian squares
+\[
+	\begin{tikzcd}
+		N_0 \rar \dar & W_0 \dar & N \lar \dar \\
+		M \rar & M \times \RR & M \lar \\
+	\end{tikzcd}
+\]
+Thus we may define complex bordism groups $\Uc_q(M)$.
+
+We define complex cobordism groups $\Uc^{m-q}(M) = \Uc_q(M)$ by Poincar\'e duality (using $\MU_q(M) = \MU^{m-q}(M)$).
+This gives a \emph{geometric} model of cobordism!
+
+On oriented manifolds, Poincar\'e duality gives an equivalence $H^{n-k} \simeq H_k$.
+This induces ``wrong way maps'' in homology and cohomology, which turn out to admit geometric descriptions:
+\begin{itemize}
+	\item For homology, we get a ``pullback'' by taking preimages of generic cycles representing a homology class.
+	\item For cohomology, we get a ``pushforward'' by integrating along fibers.
+\end{itemize}
+
 \end{document}
